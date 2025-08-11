@@ -19,6 +19,14 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- Search bar at the bottom -->
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:queryHint="Search vacations...">
+            </androidx.appcompat.widget.SearchView>
+
             <ScrollView
                 android:id="@+id/scrollview"
                 android:layout_width="match_parent"
@@ -34,17 +42,7 @@
 
             </ScrollView>
 
-            <!-- Search bar at bottom center -->
-            <EditText
-                android:id="@+id/search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Search vacations..."
-                android:layout_gravity="center"
-                android:layout_margin="12dp"
-                android:padding="10dp"
-                android:background="#d3d3d3"
-                android:inputType="text" />
+
 
         </LinearLayout>
 
