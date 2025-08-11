@@ -165,11 +165,6 @@ public class Repository {
         }
     }
 
-    //Live search for vacation by title
-    public LiveData<List<Vacation>> searchVacations (String searchQuery) {
-        return mVacationDAO.searchVacations("%" + searchQuery + "%");
-    }
-
 }
 
 

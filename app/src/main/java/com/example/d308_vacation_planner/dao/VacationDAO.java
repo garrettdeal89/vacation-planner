@@ -32,7 +32,5 @@ public interface VacationDAO {
     @Query("SELECT * FROM VACATIONS ORDER BY vacationID ASC")
     List<Vacation> getAllVacations();
 
-    //search method
-    @Query("SELECT * FROM vacations WHERE vacationTitle LIKE :searchQuery ORDER BY vacationID ASC")
-    LiveData<List<Vacation>> searchVacations(String searchQuery);
+
 }
