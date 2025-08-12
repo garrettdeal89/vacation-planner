@@ -7,17 +7,17 @@ public class Users {
     private String userEmail;
     private String userPassword;
 
-    // Default constructor (required for some frameworks)
+    // constructor
     public Users() { }
 
-    // Constructor for creating a new user (no id yet)
+    // Constructor for creating a new user
     public Users(String userName, String userEmail, String userPassword) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
     }
 
-    // Constructor for reading an existing user from DB (id known)
+    // Constructor for reading an existing user
     public Users(int userId, String userName, String userEmail, String userPassword) {
         this.userId = userId;
         this.userName = userName;

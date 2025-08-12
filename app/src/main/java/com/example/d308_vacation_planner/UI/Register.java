@@ -24,7 +24,8 @@ public class Register extends AppCompatActivity {
     Button registerButtonReg;
     Button returnButtonReg;
 
-    LinkUsers linkUsers; // Database helper
+    // Database helper object
+    LinkUsers linkUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class Register extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
 
+        // Connect UI
         editNameReg = findViewById(R.id.editNameReg);
         editEmailAddressReg = findViewById(R.id.editEmailAddressReg);
         editPasswordReg = findViewById(R.id.editPasswordReg);
@@ -39,52 +41,59 @@ public class Register extends AppCompatActivity {
         registerButtonReg = findViewById(R.id.registerButtonReg);
         returnButtonReg = findViewById(R.id.returnButtonReg);
 
+        // Initialize db helper
         linkUsers = new LinkUsers(this);
 
-        // Return to login
+        // go back to login screen
         returnButtonReg.setOnClickListener(v -> {
             startActivity(new Intent(Register.this, MainActivity.class));
             finish();
         });
 
-        // Register button logic
+        // Register button click
         registerButtonReg.setOnClickListener(v -> {
+            // Step 1: Get user input
             String strName = editNameReg.getText().toString().trim();
             String strEmail = editEmailAddressReg.getText().toString().trim();
             String strPassword = editPasswordReg.getText().toString().trim();
             String strConfirmPassword = editConfirmPasswordReg.getText().toString().trim();
 
-            // Validation checks
+            // Validate empty fields
             if (strName.isEmpty() || strEmail.isEmpty() || strPassword.isEmpty() || strConfirmPassword.isEmpty()) {
                 Toast.makeText(Register.this, "All fields are required", Toast.LENGTH_SHORT).show();
                 return;
             }
 
+            // Validate email format
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
                 Toast.makeText(Register.this, "Invalid email format", Toast.LENGTH_SHORT).show();
                 return;
             }
 
+            // Check if passwords match
             if (!strPassword.equals(strConfirmPassword)) {
                 Toast.makeText(Register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                 return;
             }
 
+            // Check if email already exists in DB
             if (linkUsers.checkUserExists(strEmail)) {
                 Toast.makeText(Register.this, "Email already registered", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Insert into database
+            // Insert new user into database
             Users newUser = new Users(strName, strEmail, strPassword);
             linkUsers.addUser(newUser);
 
+            // Show success toast message
             Toast.makeText(Register.this, "Registration successful!", Toast.LENGTH_SHORT).show();
 
-            // Redirect to login
+            // Redirect to login screen
             startActivity(new Intent(Register.this, MainActivity.class));
             finish();
         });
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
