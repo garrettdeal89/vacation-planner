@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -17,6 +17,9 @@ import com.example.d308_vacation_planner.R;
 public class MainActivity extends AppCompatActivity {
 
     public static int numAlert;
+    EditText editEmailAddress;
+    EditText editPassword;
+    Button registerLog;
 
 
     @Override
@@ -25,9 +28,21 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        editEmailAddress = findViewById(R.id.editEmailAddress);
+        editPassword = findViewById(R.id.editPassword);
+        registerLog = findViewById(R.id.register_button);
+
+        registerLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Register.class);
+                startActivity(i);
+            }
+        });
 
 
-        //Home page button
+
+        //login button
         Button button=findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener(){
 
