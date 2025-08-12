@@ -2,6 +2,7 @@ package com.example.d308_vacation_planner.UI.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -30,31 +31,36 @@ public class LinkUsers extends SQLiteOpenHelper {
         String query = "CREATE TABLE " + dbTable + " ("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + name + " TEXT, "
-                + email + " TEXT, "
+                + email + " TEXT UNIQUE, "  // UNIQUE constraint on email
                 + password + " TEXT)";
         db.execSQL(query);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
         db.execSQL("DROP TABLE IF EXISTS " + dbTable);
         onCreate(db);
     }
 
-    public void addUser(Users users){
-
+    public void addUser(Users users) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
         values.put(name, users.getUserName());
         values.put(email, users.getUserEmail());
         values.put(password, users.getUserPassword());
         db.insert(dbTable, null, values);
-
-
+        db.close();
     }
 
+    public boolean checkUserExists(String emailToCheck) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + email + " FROM " + dbTable + " WHERE " + email + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{emailToCheck});
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return exists;
+    }
 }
 
 

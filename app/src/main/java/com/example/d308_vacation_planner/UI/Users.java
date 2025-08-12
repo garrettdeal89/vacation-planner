@@ -2,20 +2,30 @@ package com.example.d308_vacation_planner.UI;
 
 public class Users {
 
-    private int userId;
+    private int userId; // auto-generated in DB
     private String userName;
     private String userEmail;
     private String userPassword;
-    private String userConfirmPassword;
 
-    public Users(int userId, String userName, String userEmail, String userPassword, String userConfirmPassword) {
+    // Default constructor (required for some frameworks)
+    public Users() { }
+
+    // Constructor for creating a new user (no id yet)
+    public Users(String userName, String userEmail, String userPassword) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+    }
+
+    // Constructor for reading an existing user from DB (id known)
+    public Users(int userId, String userName, String userEmail, String userPassword) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
-        this.userConfirmPassword = userConfirmPassword;
     }
 
+    // Getters and setters
     public int getUserId() {
         return userId;
     }
@@ -46,13 +56,5 @@ public class Users {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
-    }
-
-    public String getUserConfirmPassword() {
-        return userConfirmPassword;
-    }
-
-    public void setUserConfirmPassword(String userConfirmPassword) {
-        this.userConfirmPassword = userConfirmPassword;
     }
 }
