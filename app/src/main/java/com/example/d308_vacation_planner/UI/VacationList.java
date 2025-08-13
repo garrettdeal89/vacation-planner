@@ -147,6 +147,8 @@ public class VacationList extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        //menu option to navigate to vacation details
         if (item.getItemId() == R.id.myVacations) {
             Intent intent = new Intent(VacationList.this, VacationDetails.class);
             startActivity(intent);
@@ -169,10 +171,12 @@ public class VacationList extends AppCompatActivity {
             return true;
         }
 
-        /* if (item.getItemId() == android.R.id.home) {
-            this.finish();
+        //log out and return to login activity
+         if (item.getItemId() == R.id.log_out_vList) {
+            Intent intent = new Intent(VacationList.this, MainActivity.class);
+            startActivity(intent);
             return true;
-        } */
+        }
 
         return super.onOptionsItemSelected(item);
     }

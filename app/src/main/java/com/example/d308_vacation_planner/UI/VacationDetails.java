@@ -385,6 +385,14 @@ public class VacationDetails extends AppCompatActivity {
             }
             return true;
         }
+
+        //log out and return to login activity
+        if (item.getItemId() == R.id.log_out_vList) {
+            Intent intent = new Intent(VacationDetails.this, MainActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
