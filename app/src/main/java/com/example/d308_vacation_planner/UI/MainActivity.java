@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     Button registerLog;
     Button loginButton;
 
-    LinkUsers linkUsers; // Database helper for user operations
+    // Database helper
+    LinkUsers linkUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         });
 
-        // "Login button functionality
+        // Login button functionality
         loginButton.setOnClickListener(v -> {
             String email = editEmailAddress.getText().toString().trim();
             String password = editPassword.getText().toString().trim();
