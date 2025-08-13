@@ -24,9 +24,15 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
     public class VacationViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView vacationItemView;
+        private final TextView vacationDatesView;
+
         public VacationViewHolder(@NonNull View itemView) {
             super(itemView);
+            // view title
             vacationItemView = itemView.findViewById(R.id.vacationitem1);
+            // view start and end dates
+            vacationDatesView = itemView.findViewById(R.id.vacationDates);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -58,9 +64,14 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
             Vacation current = mVacations.get(position);
             String title = current.getVacationTitle();
             holder.vacationItemView.setText(title);
-        }
-        else {
-         holder.vacationItemView.setText("No vacation name");
+
+            // Display start and end dates under title
+            String dateRange = current.getStartDate() + " → " + current.getEndDate();
+            holder.vacationDatesView.setText(dateRange);
+
+        } else {
+            holder.vacationItemView.setText("");
+            holder.vacationDatesView.setText("");
         }
     }
 

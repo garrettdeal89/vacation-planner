@@ -21,5 +21,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
+    <TextView
+        android:id="@+id/vacationDates"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#555"
+        android:paddingTop="2dp"
+        android:text="Jan 01, 2025 → Jan 07, 2025"
+        app:layout_constraintTop_toBottomOf="@id/vacationitem1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
