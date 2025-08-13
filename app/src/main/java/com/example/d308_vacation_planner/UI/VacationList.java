@@ -2,7 +2,6 @@ package com.example.d308_vacation_planner.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +23,6 @@ import com.example.d308_vacation_planner.R;
 import com.example.d308_vacation_planner.UI.database.Repository;
 import com.example.d308_vacation_planner.UI.entities.Vacation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,10 +48,6 @@ public class VacationList extends AppCompatActivity {
 
         setTitle("My Vacation List");
 
-        // Debug/view lookups
-        Log.d("DEBUG", "searchView: " + findViewById(R.id.search_view));
-        Log.d("DEBUG", "recyclerView: " + findViewById(R.id.recyclerview));
-
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(VacationList.this, VacationDetails.class);
@@ -77,24 +71,48 @@ public class VacationList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         vacationAdapter.setVacations(allVacations);
 
-        // SearchView filtering
+        // Search filtering
         if (searchView != null) {
+            // Always expanded and focusable
+            searchView.setIconifiedByDefault(false);
+            searchView.setFocusable(true);
+            searchView.setFocusableInTouchMode(true);
+            searchView.requestFocusFromTouch();
+
+            // Ensure clicking the text triggers search
+            searchView.setOnClickListener(v -> searchView.setIconified(false));
+
+            // Listen for text input to filter results
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                private static final int MAX_SEARCH_LENGTH = 50; // maximum allowed characters
+
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    if (query.length() > MAX_SEARCH_LENGTH) {
+                        Toast.makeText(VacationList.this,
+                                "Search limited to 50 characters.",
+                                Toast.LENGTH_SHORT).show();
+                        query = query.substring(0, MAX_SEARCH_LENGTH);
+                    }
                     filterVacations(query);
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
+                    if (newText.length() > MAX_SEARCH_LENGTH) {
+                        Toast.makeText(VacationList.this,
+                                "Search limited to 50 characters.",
+                                Toast.LENGTH_SHORT).show();
+                        newText = newText.substring(0, MAX_SEARCH_LENGTH);
+                        searchView.setQuery(newText, false);
+                    }
                     filterVacations(newText);
                     return true;
                 }
             });
-        } else {
-            Log.e("ERROR", "SearchView is NULL - check layout reference!");
         }
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -103,7 +121,8 @@ public class VacationList extends AppCompatActivity {
         });
     }
 
-    // Filtering helper to search title, start date, and/or end date
+
+    // Filtering method
     private void filterVacations(String text) {
         if (text == null || text.trim().isEmpty()) {
             vacationAdapter.setVacations(allVacations);
@@ -118,7 +137,6 @@ public class VacationList extends AppCompatActivity {
             String start = vacation.getStartDate() != null ? vacation.getStartDate().toLowerCase(Locale.US) : "";
             String end = vacation.getEndDate() != null ? vacation.getEndDate().toLowerCase(Locale.US) : "";
 
-            // Check if text appears in any fields
             if (title.contains(lowerText) || start.contains(lowerText) || end.contains(lowerText)) {
                 filteredList.add(vacation);
             }
@@ -126,7 +144,7 @@ public class VacationList extends AppCompatActivity {
 
         vacationAdapter.setVacations(filteredList);
     }
-
+    // ======= END MEMBER METHOD =======
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,31 +166,23 @@ public class VacationList extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //menu option to navigate to vacation details
         if (item.getItemId() == R.id.myVacations) {
             Intent intent = new Intent(VacationList.this, VacationDetails.class);
             startActivity(intent);
             return true;
         }
 
-        // menu option to generate report
         if (item.getItemId() == R.id.generate_report) {
-            // Show confirmation dialog before generating report
             new AlertDialog.Builder(this)
                     .setTitle("Generate Report?")
-                    .setMessage("Do you want to generate and share your current Planned Vacations Report? (reports generate as .csv files)" )
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        generateAndShareReport();  // Generate and share report if confirmed
-                    })
-                    .setNegativeButton("Cancel", (dialog, which) -> {
-                        dialog.dismiss(); // Do nothing if canceled
-                    })
+                    .setMessage("Do you want to generate and share your current Planned Vacations Report? (reports generate as .csv files)")
+                    .setPositiveButton("Yes", (dialog, which) -> generateAndShareReport())
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                     .show();
             return true;
         }
 
-        //log out and return to login activity
-         if (item.getItemId() == R.id.log_out_vList) {
+        if (item.getItemId() == R.id.log_out_vList) {
             Intent intent = new Intent(VacationList.this, MainActivity.class);
             startActivity(intent);
             return true;
@@ -189,12 +199,7 @@ public class VacationList extends AppCompatActivity {
         }
 
         StringBuilder csvBuilder = new StringBuilder();
-
-        // Title row
-        csvBuilder.append("Planned Vacations Report\n");
-        csvBuilder.append("\n");  // Blank line for spacing
-
-        // Column headers
+        csvBuilder.append("Planned Vacations Report\n\n");
         csvBuilder.append("Destination,Start Date,End Date,Number of Days,Date/Time Generated\n");
 
         SimpleDateFormat sdfDate = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
@@ -227,25 +232,19 @@ public class VacationList extends AppCompatActivity {
         }
 
         try {
-            // Save CSV file in cache directory
             File cacheDir = new File(getCacheDir(), "shared_csv");
-            if (!cacheDir.exists()) {
-                cacheDir.mkdirs();
-            }
+            if (!cacheDir.exists()) cacheDir.mkdirs();
 
             File csvFile = new File(cacheDir, "Planned_Vacations_Report.csv");
-
             try (FileOutputStream fos = new FileOutputStream(csvFile)) {
                 fos.write(csvBuilder.toString().getBytes(StandardCharsets.UTF_8));
             }
 
-            // Get URI from FileProvider
             Uri contentUri = FileProvider.getUriForFile(
                     this,
                     getPackageName() + ".fileprovider",
                     csvFile);
 
-            // Share Report
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/csv");
             shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
@@ -258,9 +257,7 @@ public class VacationList extends AppCompatActivity {
             Toast.makeText(this, "Failed to generate report: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
-
-    }
-
+}
 
 
 
