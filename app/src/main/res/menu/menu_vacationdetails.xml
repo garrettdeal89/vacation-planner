@@ -14,4 +14,8 @@
         android:id="@+id/vacationdelete"
         android:textAppearance="@style/RedDeleteStyle" />
 
+    <item
+        android:id="@+id/log_out_vDetails"
+        android:title="Log Out" />
+
 </menu>

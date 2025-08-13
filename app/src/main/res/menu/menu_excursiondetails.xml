@@ -11,4 +11,8 @@
         android:id="@+id/excursiondelete"
         android:textAppearance="@style/RedDeleteStyle" />
 
+    <item
+        android:id="@+id/log_out_eDetails"
+        android:title="Log Out" />
+
 </menu>

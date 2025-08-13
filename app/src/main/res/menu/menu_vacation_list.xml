@@ -2,6 +2,16 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Add a Vacation"
+    <item android:title="Add Vacation"
         android:id="@+id/myVacations" />
+
+    <item
+        android:id="@+id/generate_report"
+        android:title="Generate Report" />
+
+    <item
+        android:id="@+id/log_out_vList"
+        android:title="Log Out" />
+
+
 </menu>
