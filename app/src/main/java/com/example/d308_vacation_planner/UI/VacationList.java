@@ -103,17 +103,30 @@ public class VacationList extends AppCompatActivity {
         });
     }
 
-    // Filtering helper
+    // Filtering helper to search title, start date, and/or end date
     private void filterVacations(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            vacationAdapter.setVacations(allVacations);
+            return;
+        }
+
+        String lowerText = text.toLowerCase(Locale.US).trim();
         List<Vacation> filteredList = new ArrayList<>();
+
         for (Vacation vacation : allVacations) {
-            if (vacation.getVacationTitle() != null &&
-                    vacation.getVacationTitle().toLowerCase().contains(text.toLowerCase())) {
+            String title = vacation.getVacationTitle() != null ? vacation.getVacationTitle().toLowerCase(Locale.US) : "";
+            String start = vacation.getStartDate() != null ? vacation.getStartDate().toLowerCase(Locale.US) : "";
+            String end = vacation.getEndDate() != null ? vacation.getEndDate().toLowerCase(Locale.US) : "";
+
+            // Check if text appears in any fields
+            if (title.contains(lowerText) || start.contains(lowerText) || end.contains(lowerText)) {
                 filteredList.add(vacation);
             }
         }
+
         vacationAdapter.setVacations(filteredList);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
