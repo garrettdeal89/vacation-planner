@@ -70,6 +70,14 @@ public class Register extends AppCompatActivity {
                 return;
             }
 
+            // Validate password rules
+            if (!isPasswordValid(strPassword)) {
+                Toast.makeText(Register.this,
+                        "Password must be 6-15 characters and include at least 1 letter, 1 number, and 1 special character",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
+
             // Check if passwords match
             if (!strPassword.equals(strConfirmPassword)) {
                 Toast.makeText(Register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
@@ -100,5 +108,11 @@ public class Register extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+    }
+    // method to validate
+    private boolean isPasswordValid(String password) {
+        String pattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{6,15}$";
+        return password.matches(pattern);
     }
 }
