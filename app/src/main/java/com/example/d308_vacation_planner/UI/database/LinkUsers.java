@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.d308_vacation_planner.UI.Users;
+import com.example.d308_vacation_planner.UI.entities.Users;
 
 public class LinkUsers extends SQLiteOpenHelper {
 

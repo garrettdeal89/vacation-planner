@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.d308_vacation_planner.R;
 import com.example.d308_vacation_planner.UI.database.LinkUsers;
+import com.example.d308_vacation_planner.UI.entities.Users;
 
 public class Register extends AppCompatActivity {
 

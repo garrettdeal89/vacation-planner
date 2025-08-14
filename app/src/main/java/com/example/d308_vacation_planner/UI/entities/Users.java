@@ -1,4 +1,4 @@
-package com.example.d308_vacation_planner.UI;
+package com.example.d308_vacation_planner.UI.entities;
 
 public class Users {
 
