@@ -100,7 +100,7 @@
         android:id="@+id/passwordEligibilityText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Password must be 6-15 characters with at least 1 letter, 1 number, abd 1 special character"
+        android:text="Passwords Must Contain:\n6-15 characters\n1 letter\n1 number\n1 special character"
         android:textColor="#FF0000"
         android:textSize="14sp"
         android:padding="8dp"

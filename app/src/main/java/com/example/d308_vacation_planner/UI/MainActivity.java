@@ -2,6 +2,7 @@ package com.example.d308_vacation_planner.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     Button registerLog;
     Button loginButton;
 
+
     // Database helper
     LinkUsers linkUsers;
 
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         editPassword = findViewById(R.id.editPassword);
         registerLog = findViewById(R.id.register_button);
         loginButton = findViewById(R.id.loginButton);
+
 
         // Initialize db helper
         linkUsers = new LinkUsers(this);
