@@ -23,6 +23,26 @@ A full-stack Android application developed for vacation and excursion planning.
 
 ## Screenshots
 
+### Login and Validation
+
+![Login and Validation](screenshots/login-validation.png)
+
+### Vacation List
+
+![Vacation List](screenshots/vacation-list.png)
+
+### Vacation Details
+
+![Vacation Details](screenshots/vacation-details.png)
+
+### Share Functionality
+
+![Share Functionality](screenshots/share-functionality.png)
+
+### Generate Reports
+
+![Generate Reports](screenshots/generate-reports.png)
+
 (Add screenshots here)
 
 ## Future Improvements
