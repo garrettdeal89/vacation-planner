@@ -1,6 +1,6 @@
 # Vacation Planner
 
-An Android application developed as a capstone project for Western Governors University.
+A full-stack Android application developed for vacation and excursion planning.
 
 ## Features
 
